@@ -13,7 +13,7 @@ function Circle(props: Props) {
     padding: 10,
     margin: 20,
     display: "inline-block",
-    backgroundColor: props.bgColor,
+    background: `radial-gradient(circle at 100px 100px, ${props.bgColor}, #000)`,
     borderRadius: "50%",
     width: 500,
     height: 500,
@@ -21,7 +21,9 @@ function Circle(props: Props) {
   return (
     <div
       style={circleStyle}
-      className={" d-flex align-items-center justify-content-center"}
+      className={
+        "circle d-flex align-items-center justify-content-center shadow-lg"
+      }
     >
       <Col>
         <div className="question text-center">{props.header}</div>

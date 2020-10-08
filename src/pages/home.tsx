@@ -8,33 +8,24 @@ import Circle from "../components/circle";
 import Firebase from "../components/firebase";
 
 function HomePage(props: { firebase: Firebase }) {
-  let [self, setSelf] = useState("");
-
   let [users, setUsers] = useState([""]);
   let [currentUser, setCurrentUser] = useState("");
-
-  let [ems, setEms] = useState<
-    { color: string; hex: string; question: string }[] | undefined
-  >(undefined);
   let [currentEm, setCurrentEm] = useState<
     { color: string; hex: string; question: string } | undefined
   >(undefined);
 
-  useEffect(() => {
-    getUsers();
-    getCurrentUser();
-    getCurrentEm();
-  }, []);
-
-  function getSelf() {
-    let uid = props.firebase.auth?.currentUser?.uid;
-
-    props.firebase.user(uid).onSnapshot((snapshot) => {
-      setSelf(snapshot.ref.id);
-    });
-  }
+  useEffect(
+    () => {
+      getUsers();
+      getCurrentUser();
+      getCurrentEm();
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  );
 
   function getUsers() {
+    console.log(" getting user");
     props.firebase.users().onSnapshot((snapshot) => {
       setUsers(snapshot.docs.map((document) => document.data().username));
     });
@@ -46,17 +37,13 @@ function HomePage(props: { firebase: Firebase }) {
     });
   }
 
-  function getEms() {}
-
   function getCurrentEm() {
     props.firebase.ems().onSnapshot((snapshot) => {
       let ems = snapshot.docs.map((document) => convertEms(document.data()));
 
       props.firebase.currentEm().onSnapshot((snapshot) => {
         let colorName = snapshot.data()?.color;
-        console.log(ems);
         let currentEmData = ems?.find((color) => {
-          console.log(color, colorName);
           return color.color === colorName;
         });
 
@@ -80,8 +67,14 @@ function HomePage(props: { firebase: Firebase }) {
   }
 
   return (
-    <div>
-      <Col xs={8} md={6} sm={4} className="all-users m-2 p-2 bg-white">
+    <Row className="mx-0">
+      <Col
+        xl={3}
+        xs={8}
+        sm={4}
+        md={6}
+        className="all-users m-2 p-2 bg-white border-white rounded"
+      >
         {users.map((user) => {
           return (
             <Row className="m-2">
@@ -89,16 +82,13 @@ function HomePage(props: { firebase: Firebase }) {
                 style={{ width: "100%" }}
                 className={user === currentUser ? "bg-primary" : "bg-secondary"}
               >
-                <Card.Header className="text-white">
-                  {user}
-                  {self === user && " (you)"}
-                </Card.Header>
+                <Card.Header className="text-white">{user}</Card.Header>
               </Card>
             </Row>
           );
         })}
       </Col>
-      <div className="em">
+      <Col className="em d-flex justify-content-center">
         <Circle
           bgColor={currentEm?.hex || "#090909"}
           header={currentUser}
@@ -107,11 +97,13 @@ function HomePage(props: { firebase: Firebase }) {
             "question is loading or something went horribly wrong!"
           }
         ></Circle>
+      </Col>
+      <div className="next mr-5 mt-5">
+        <Button size="lg" onClick={nextUser}>
+          Next
+        </Button>
       </div>
-      <div className="next float-right mr-5">
-        {self === self && <Button size="lg">Next</Button>}
-      </div>
-    </div>
+    </Row>
   );
 }
 

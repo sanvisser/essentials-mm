@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import Col from "react-bootstrap/Col";
-import Firebase, { FirebaseContext } from "../components/firebase";
+import Firebase from "../components/firebase";
 
 function LoginPage(props: { firebase: Firebase }) {
   let [email, setEmail] = useState("");
