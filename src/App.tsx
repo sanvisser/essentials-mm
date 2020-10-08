@@ -1,25 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+
+import "./App.css";
+import LoginPage from "./pages/login";
+import AdminPage from "./pages/admin";
+import HomePage from "./pages/home";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Firebase, { FirebaseContext } from "./components/firebase";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <FirebaseContext.Consumer>
+            {(firebase: Firebase) => <LoginPage firebase={firebase} />}
+          </FirebaseContext.Consumer>
+        </Route>
+        <Route path="/admin">
+          <AdminPage />
+        </Route>
+        <Route path="/">
+          <FirebaseContext.Consumer>
+            {(firebase: Firebase) => <HomePage firebase={firebase} />}
+          </FirebaseContext.Consumer>
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
