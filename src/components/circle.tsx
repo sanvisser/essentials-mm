@@ -20,9 +20,7 @@ function Circle(props: Props) {
   useEffect(() => {
     dragInstance.current = Draggable.create(dragTarget.current, {
       type: "rotation",
-      onDragEnd() {
-        console.log(this);
-      },
+      onDragEnd() {},
     });
   }, []);
 

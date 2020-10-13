@@ -8,7 +8,6 @@ function LoginPage(props: { firebase: Firebase }) {
   const history = useHistory();
 
   function onChange(event: any) {
-    console.log(event);
     setEmail(event.target.value);
   }
 
@@ -19,7 +18,6 @@ function LoginPage(props: { firebase: Firebase }) {
     props.firebase
       .doCreateUserWithEmailAndPassword(email, "admin123")
       .then((user) => {
-        console.log(user?.user?.uid);
         return props.firebase.users().add({
           id: user?.user?.uid,
           username,
@@ -27,7 +25,6 @@ function LoginPage(props: { firebase: Firebase }) {
         });
       })
       .then((result: any) => {
-        console.log(result);
         history.push("/");
         return;
       });
