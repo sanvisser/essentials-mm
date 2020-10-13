@@ -141,7 +141,11 @@ function HomePage(props: { firebase: Firebase }) {
           <Button size="lg" className="mr-1 mb-2" onClick={onNextUserPressed}>
             Volgende gozer
           </Button>
-          <Button size="lg" className="mb-2" onClick={nextRandomColor}>
+          <Button
+            size="lg"
+            className="mb-2 btn-danger"
+            onClick={nextRandomColor}
+          >
             Gozer, Geef me een andere vraag.
           </Button>
         </div>
