@@ -21,7 +21,6 @@ function AdminPage() {
   const { register, handleSubmit } = useForm();
 
   function onSubmit(data: any) {
-    console.log(data);
     setColor([
       ...colors,
       { color: "Brown", hex: "#87F4A5", question: "No more" },
