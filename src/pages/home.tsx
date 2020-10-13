@@ -4,6 +4,7 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
+import Accordion from "react-bootstrap/Accordion";
 import Container from "react-bootstrap/Container";
 import Circle from "../components/circle";
 import Firebase from "../components/firebase";
@@ -109,26 +110,33 @@ function HomePage(props: { firebase: Firebase }) {
   return (
     <Container fluid="lg">
       <Row className="mx-0">
-        <Col
-          xs={12}
-          lg={3}
-          className="all-users m-2 p-2 bg-white border-white rounded"
-        >
-          {users.map((user) => {
-            return (
-              <Row className="m-2" key={user}>
-                <Card
-                  style={{ width: "100%" }}
-                  className={
-                    user === currentUser ? "bg-primary" : "bg-secondary"
-                  }
-                >
-                  <Card.Header className="text-white">{user}</Card.Header>
-                </Card>
-              </Row>
-            );
-          })}
-        </Col>
+        <Accordion>
+          <Accordion.Toggle as={Button} eventKey="0">
+            Users
+          </Accordion.Toggle>
+          <Accordion.Collapse eventKey="0">
+            <Col
+              xs={12}
+              lg={3}
+              className="all-users m-2 p-2 bg-white border-white rounded"
+            >
+              {users.map((user) => {
+                return (
+                  <Row className="m-2" key={user}>
+                    <Card
+                      style={{ width: "100%" }}
+                      className={
+                        user === currentUser ? "bg-primary" : "bg-secondary"
+                      }
+                    >
+                      <Card.Header className="text-white">{user}</Card.Header>
+                    </Card>
+                  </Row>
+                );
+              })}
+            </Col>
+          </Accordion.Collapse>
+        </Accordion>
         <Col className="em d-flex justify-content-center">
           <Circle
             bgColor={currentEm?.hex || "#090909"}
