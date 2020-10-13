@@ -117,7 +117,6 @@ function HomePage(props: { firebase: Firebase }) {
           <Accordion.Collapse eventKey="0">
             <Col
               xs={12}
-              lg={3}
               className="all-users m-2 p-2 bg-white border-white rounded"
             >
               {users.map((user) => {
